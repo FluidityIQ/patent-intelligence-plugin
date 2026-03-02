@@ -1,6 +1,6 @@
 {
   "name": "patent-intelligence",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Patentability assessments, prior art searches, and invention feature mapping for IP law teams.",
   "author": {
     "name": "FluidityIQ"
