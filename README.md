@@ -75,7 +75,7 @@ Accepts: invention description, Invention Disclosure Form, pasted text, or file 
 
 1. **Intake** — Gather invention details and identify the point of novelty
 2. **Search** — Multi-round semantic patent search with terminology refinement
-3. **Classify** — Categorize references as Anticipatory (RED), Combinable (YELLOW), or Background (GREEN)
+3. **Classify** — Categorize references as Anticipatory, Combinable, or Background
 4. **Map** — Build feature coverage matrix with specific citations
 5. **Analyze** — Evaluate novelty and non-obviousness
 6. **Report** — Generate the structured Patentability Assessment Report
@@ -152,11 +152,11 @@ The Patentability Assessment Report follows a structured template:
 
 References follow a three-tier classification:
 
-| Category | Threat Level | Action |
-|----------|-------------|--------|
-| **Anticipatory** (RED) | Discloses all key features — threatens novelty | Detailed mapping, immediate flag, design-around analysis |
-| **Combinable** (YELLOW) | Discloses some features — may threaten non-obviousness | Feature gap analysis, combination assessment |
-| **Background** (GREEN) | Provides context, no direct threat | Landscape awareness |
+| Category | Meaning | Action |
+|----------|---------|--------|
+| **Anticipatory** | Discloses all key features — threatens novelty | Detailed mapping, immediate flag, design-around analysis |
+| **Combinable** | Discloses some features — may threaten non-obviousness | Feature gap analysis, combination assessment |
+| **Background** | Provides context, no direct threat | Landscape awareness |
 
 ## File Structure
 
