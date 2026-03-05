@@ -187,6 +187,19 @@ Future skills planned for the Patent Intelligence Plugin:
 | `portfolio-analysis` | Patent portfolio gap analysis and landscaping | Planned |
 | `claim-drafting` | Claim drafting assistance from invention disclosures | Planned |
 
+## Support
+
+- **GitHub Issues:** [Report bugs or request features](https://github.com/FluidityIQ/patent-intelligence-plugin/issues)
+- **Email:** support@fluidityiq.com
+
+## Privacy
+
+This plugin sends invention descriptions and semantic search queries to the Patent Search MCP (FluidityIQ Patents MCP at `https://patents.fluidityiq.ai/mcp`) for prior art search and patent retrieval. No other conversation data is transmitted. For full details on data collection, use, and retention, see the [FluidityIQ Privacy Policy](https://www.fluidityiq.com/privacy-policy).
+
+## Terms of Service
+
+For more details, see the [FluidityIQ Terms of Service](https://www.fluidityiq.com/terms-of-service).
+
 ## License
 
 MIT — see [LICENSE](LICENSE) for details.
