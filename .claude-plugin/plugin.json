@@ -1,10 +1,14 @@
 {
   "name": "patent-intelligence",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Patentability assessments, prior art searches, and invention feature mapping for IP law teams.",
   "author": {
-    "name": "FluidityIQ"
+    "name": "FluidityIQ",
+    "email": "support@fluidityiq.com",
+    "url": "https://www.fluidityiq.com"
   },
+  "homepage": "https://www.fluidityiq.com",
   "repository": "https://github.com/FluidityIQ/patent-intelligence-plugin",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": ["patents", "prior-art", "patentability", "ip", "intellectual-property"]
 }
