@@ -166,6 +166,7 @@ patent-intelligence-plugin/
 ├── .mcp.json
 ├── README.md
 ├── CONNECTORS.md
+├── SECURITY.md
 ├── LICENSE
 ├── commands/
 │   └── assess-patentability.md
