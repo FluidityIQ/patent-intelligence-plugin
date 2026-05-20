@@ -171,15 +171,46 @@ Execute searches using ONLY the `~~patent search` MCP tools. Follow this iterati
 2. If results are dominated by one jurisdiction, explicitly filter for other jurisdictions (if the MCP supports jurisdiction parameters)
 3. If results cluster in one technical field but the invention bridges fields, broaden the description to include cross-domain language
 
-### D.2 When to Stop Searching
+### D.2 Mandatory feature grep on top candidates
 
-Stop when any of these conditions is met:
-- **Saturation**: Refined queries return the same references already identified (no new relevant art emerging)
-- **Sufficient coverage**: You have 10-50 categorized references with clear coverage of the main invention features
-- **Anticipatory reference found**: A single reference appears to disclose all key features of the invention — flag immediately and proceed to classification
-- **Three rounds completed** with diminishing returns — document limitations and note areas where additional searching may be warranted
+Semantic ranking has a structural blind spot. When a patent's title and abstract describe a different inventive emphasis than the invention being assessed — for instance, a document framed around one technology that happens to disclose the relevant feature combination in a comparative example, a subsidiary embodiment, or a Markush-style alternative list — the document can sit below the semantic-search result threshold even though it discloses every element of the invention. The following step catches these.
 
-### D.3 Result Capture
+**After the semantic search rounds (D.1) have saturated and before stopping (D.3), retrieve the full description and claims of the top 5–10 candidate references — using the patent details tool — and grep each retrieved text for every named feature of the invention, plus the known synonyms and substitutable alternatives for each feature.** This step is mandatory, not optional. It is the single highest-leverage catch for buried disclosures and should be performed even when the semantic search results appear saturated.
+
+**Where to look in the retrieved text.** Pay particular attention to:
+
+- **Comparative-example sections** (labeled "Comparative Example," "Vergleichsbeispiel," "比较例," "비교예," and similar in non-English documents). Comparative examples are prior-art disclosures even when presented as negative controls, and they routinely contain the very feature combinations that the patentee identifies as the closest baseline to its claimed invention.
+- **Markush-style enumeration clauses** in claims and specification (e.g., "wherein the [component / configuration / step / formulation / system] is one of X, Y, Z, ..."). These enumerate disclosed alternatives and can supply a limitation that completes an otherwise partial anticipation.
+- **Tabulated content.** The relevant disclosure is sometimes only in a table — a parts list, a parameter sweep, a comparison matrix, or an ingredient list — and not in the running narrative text.
+- **Other embodiment-numbering blocks** outside the main inventive example (e.g., "Preparation Example," "Reference Example," "Test Example," "Experimental Example," "Working Example," "Alternative Embodiment"). These may contain feature combinations not flagged by abstract-level review.
+
+**Synonym expansion before grepping.** Build the feature-term set deliberately before running the grep:
+
+- The generic name for each feature alongside any industry-standard, registered, trade, or proprietary names
+- Form variants — alternative names that describe processed forms, sub-variants, or near-equivalents of the same underlying feature. These are not interchangeable in claim scope but they are interchangeable as search terms.
+- Cross-language variants for non-English documents (use the English term plus the document's native-language term, when known)
+- Pairs of terms that are commonly conflated or used interchangeably in drafting despite being technically distinct — check both
+- Class-level or generic alternatives that the prior art may treat as substitutable for the specific feature. A class-level hit does not anticipate a species-specific claim but is highly relevant for obviousness mapping under a simple-substitution rationale.
+- Abbreviations, acronyms, and the expanded form for each named feature
+
+**Reclassifying after the grep.** If the grep surfaces a feature match in a reference previously classified as Background — or in a reference not surfaced by the semantic ranking at all — re-classify the reference upward (typically to Combinable, occasionally to Anticipatory). Update the Feature Coverage Matrix (Section E.2) and the novelty and obviousness analysis to reflect the new finding. If the matched passage is in a comparative example or alternative embodiment AND the same patent's claims or specification enumerate the relevant product form, system context, or method context among its disclosed alternatives, treat this as the strongest possible Combinable reference and explicitly assess whether anticipation is available under a "reading-reference-as-a-whole" theory.
+
+**Documenting the sweep.** In the Search Methodology section of the report, record (i) the feature-term set used, (ii) the references swept (top N by maximum relevance score across all semantic rounds), and (iii) any reclassifications resulting from the sweep. This makes the search reproducible and helps reviewing counsel assess search completeness.
+
+### D.3 When to Stop Searching
+
+The mandatory feature grep on top candidates (Section D.2) must be completed before searching stops — even when the semantic-search rounds appear saturated. **Treat semantic-search saturation as a trigger to run D.2, not as a stop signal in itself.** The grep step routinely surfaces references that materially change the assessment (re-classifications upward to Combinable or Anticipatory, new feature-coverage findings), and stopping before D.2 is complete defeats the purpose of the step.
+
+After D.2 has been completed for every named feature and its synonym set, stop when one of the following is true:
+
+- **Saturation**: BOTH the semantic-search rounds (D.1) AND the D.2 grep on the top candidates return no new relevant art
+- **Sufficient coverage**: You have 10-50 categorized references with clear coverage of the main invention features, and D.2 has surfaced no further reclassifications
+- **Anticipatory reference found**: A single reference appears to disclose all key features of the invention — flag immediately and proceed to classification (whether identified during D.1 or surfaced during D.2)
+- **Three rounds completed** with diminishing returns, AND D.2 has been performed on the resulting consolidated candidate set — document limitations and note areas where additional searching may be warranted
+
+If a partial D.2 sweep is performed (e.g., grep run on fewer than the recommended top 5–10 candidates because of resource constraints), document that explicitly in the Search Methodology section and flag it as a coverage gap.
+
+### D.4 Result Capture
 
 For each patent reference identified as potentially relevant, capture from the search results:
 - Patent/publication number (e.g., US 10,123,456 B2, WO 2023/045678 A1, CN 115xxx A)
@@ -419,8 +450,11 @@ Further searching and/or Attorney review is recommended before relying on these 
         What rationale would support combining them?]
 
 7. SEARCH METHODOLOGY
-   7.1 Search Method: Semantic search via Patent Search MCP
-   7.2 References Categorized: [Anticipatory: n, Combinable: n, Background: n]
+   7.1 Search Method: Semantic search via Patent Search MCP, with mandatory feature grep on top candidates (Section D.2)
+   7.2 Feature-term set used in the D.2 grep: [list of feature names and their synonyms / variants / class-level alternatives]
+   7.3 References swept in D.2: [top N references by maximum relevance score across all rounds]
+   7.4 Reclassifications from D.2 grep: [any references moved upward in classification, with the surfacing passage cited]
+   7.5 References Categorized: [Anticipatory: n, Combinable: n, Background: n]
 
 8. LIMITATIONS AND CAVEATS
     - This search covers patent documents only (granted patents and
@@ -430,7 +464,11 @@ Further searching and/or Attorney review is recommended before relying on these 
     - Patent applications filed within the last 18 months may not appear
       in search results (18-month secrecy window)
     - Semantic search may miss references using significantly different
-      terminology or framing
+      terminology or framing; the mandatory feature-grep step (D.2) is
+      designed to catch documents whose semantic ranking does not reflect
+      the disclosures buried in comparative examples or alternative
+      embodiments, but cannot catch documents that were never surfaced
+      as candidates in the first place
     - Results should be verified by a qualified patent professional
     - Specify jurisdictions and date ranges covered by the search
     - For non-English documents: note whether machine-translated claims
