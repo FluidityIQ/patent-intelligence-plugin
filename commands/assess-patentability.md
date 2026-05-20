@@ -44,7 +44,7 @@ Transform the disclosure into one or more semantic search queries (primary + sub
 
 ### Step 5: Execute Search
 
-Run the iterative search protocol (primary search, sub-query expansion, terminology harvesting, gap-filling) using the `~~patent search` MCP tools. Stop when results saturate, coverage is sufficient, or an anticipatory reference is found.
+Run the iterative search protocol (primary search, sub-query expansion, terminology harvesting, gap-filling) using the `~~patent search` MCP tools. After semantic rounds saturate, perform the mandatory feature grep on the top 5–10 candidates (patentability skill Section D.2) before stopping. Stop only when that grep is complete and results saturate, coverage is sufficient, or an anticipatory reference is found.
 
 ### Step 6: Classify References
 
