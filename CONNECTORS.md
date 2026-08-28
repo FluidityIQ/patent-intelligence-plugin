@@ -18,8 +18,14 @@ This plugin requires **FluidityIQ Patents MCP** as its patent search provider. N
 
 FluidityIQ Patents MCP provides two capabilities used by this plugin:
 
-1. **Semantic search** — accept a natural-language description and return ranked patent results
-2. **Patent details** — accept a publication number and return the full text (description, claims, metadata)
+1. **Semantic search** (`search_patents`) — accept a natural-language description and return ranked patent results. Optional arguments:
+   - `query` (required): technical topic only. Semantic, not keywords or Boolean.
+   - `assignee` (optional): partial company/assignee name. Put the company here, not in `query` (e.g. `query="wireless charging"`, `assignee="Apple"`). Resolved against patent assignee records, then applied as an exact metadata filter. An unknown name returns no hits (not an unfiltered search). Do not also set `filter.assignee`; the two constraints are ANDed and can contradict.
+   - `filter` (optional): metadata such as `country` (e.g. `{"country": {"$eq": "US"}}`).
+   - `max_results` (optional).
+2. **Patent details** (`patent_details`) — accept a publication number and return the full text (description, claims, metadata)
+
+Use `assignee` when the user wants **company-scoped landscape** search (a competitor, their own portfolio, “patents from X”). Omit it for a general patentability / world prior-art search.
 
 The connection is pre-configured in `.mcp.json`. The plugin will not function without it.
 
