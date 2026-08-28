@@ -44,10 +44,10 @@ If no local settings are configured, proceed with the defaults defined in this s
 > If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](${CLAUDE_PLUGIN_ROOT}/CONNECTORS.md).
 
 **Available MCP tools:** The Patent Search MCP provides two capabilities:
-1. **Semantic search** — submit a natural-language description and receive ranked patent results
-2. **Patent details** — retrieve the full text of an individual patent document (description, claims, and metadata) by its publication number
+1. **Semantic search** (`search_patents`) — submit a natural-language description and receive ranked patent results. Keep `query` as the technical topic. When the user wants patents from a named company (competitor landscape, own assignee, “search Apple”), pass that name as `assignee` and do **not** stuff the company into `query`. Do not also set `filter.assignee`. For a general patentability search with no company scope, omit `assignee`.
+2. **Patent details** (`patent_details`) — retrieve the full text of an individual patent document (description, claims, and metadata) by its publication number
 
-Use semantic search to find candidates, then use patent details to pull the full text of promising references for deeper analysis.
+Use semantic search to find candidates, then use patent details to pull the full text of promising references for deeper analysis. See [CONNECTORS.md](${CLAUDE_PLUGIN_ROOT}/CONNECTORS.md) for the full `search_patents` argument list.
 
 ## A. Patentability Requirements Overview
 
@@ -142,6 +142,7 @@ Before submitting a query to the Patent Search MCP, verify:
 - [ ] Description is substantive (not keywords or a single sentence)
 - [ ] Includes the technical mechanism (how, not just what)
 - [ ] Mentions specific materials, components, parameters, or configurations where known
+- [ ] Company names the user wants to scope to are in `assignee`, not in `query`
 
 ## D. Search Execution Protocol
 
@@ -150,7 +151,7 @@ Execute searches using ONLY the `~~patent search` MCP tools. Follow this iterati
 ### D.1 Search Rounds
 
 **Round 1 — Primary search:**
-1. Submit the primary semantic query (from Section C.1) via the MCP's semantic search tool
+1. Submit the primary semantic query (from Section C.1) via `search_patents`. If the user named a company to scope the search, pass `assignee` as well.
 2. Request the top 20-30 results ranked by semantic similarity
 3. Review titles and abstracts of all returned results
 4. For any result that appears highly relevant, use the MCP's patent details tool to retrieve the full text (description and claims) for closer reading

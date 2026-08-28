@@ -124,6 +124,8 @@ The plugin connects to tools through MCP (Model Context Protocol) servers. The p
 |----------|---------|
 | Patent search | Semantic prior art search, patent document retrieval |
 
+Semantic search (`search_patents`) takes an optional **`assignee`** for company-scoped landscape search. Put the company in `assignee` and keep `query` as the technical topic (e.g. wireless charging + Apple). Omit `assignee` for a world prior-art / patentability search. Details: [CONNECTORS.md](CONNECTORS.md).
+
 ## Customization
 
 ### Local Settings
